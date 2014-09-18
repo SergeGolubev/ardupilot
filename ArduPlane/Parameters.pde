@@ -617,7 +617,7 @@ const AP_Param::Info var_info[] PROGMEM = {
     // @Range: 0 9000
     // @Increment: 1
     // @User: Standard
-    GSCALAR(roll_limit_circle_cd,          "LIM_ROLL_CRCL_CD",    HEAD_MAX_CENTIDEGREE),
+    GSCALAR(roll_limit_circle_cd,          "LIM_ROLL_CRCL_CD",    2000),
    
 	// @Param: LIM_PITCH_MAX
     // @DisplayName: Maximum Pitch Angle
