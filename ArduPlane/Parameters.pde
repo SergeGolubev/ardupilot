@@ -609,8 +609,17 @@ const AP_Param::Info var_info[] PROGMEM = {
     // @Increment: 1
     // @User: Standard
     GSCALAR(roll_limit_cd,          "LIM_ROLL_CD",    HEAD_MAX_CENTIDEGREE),
-
-    // @Param: LIM_PITCH_MAX
+	
+	// @Param: LIM_ROLL_CRCL_CD
+    // @DisplayName: Maximum Bank Angle CIRCLE MODE
+    // @Description: The bank angle in CIRCLE MODE, actual roll angle is min( LIM_ROLL_CD, LIM_ROLL_CRCL_CD )
+    // @Units: centi-Degrees
+    // @Range: 0 9000
+    // @Increment: 1
+    // @User: Standard
+    GSCALAR(roll_limit_circle_cd,          "LIM_ROLL_CRCL_CD",    HEAD_MAX_CENTIDEGREE),
+   
+	// @Param: LIM_PITCH_MAX
     // @DisplayName: Maximum Pitch Angle
     // @Description: The maximum commanded pitch up angle
     // @Units: centi-Degrees

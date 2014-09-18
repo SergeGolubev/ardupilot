@@ -200,6 +200,10 @@ public:
         k_param_camera_mount,
         k_param_camera_mount2,
 
+		// макс. крен в режиме circle, в сотых градуса 
+		// пихнул сюда, потому что в секцию Navigation parameters уже не лезет
+		k_param_roll_limit_circle_cd,
+
         //
         // Battery monitoring parameters
         //
@@ -402,6 +406,7 @@ public:
     // Navigational maneuvering limits
     //
     AP_Int16 roll_limit_cd;
+	AP_Int16 roll_limit_circle_cd;
     AP_Int16 alt_offset;
     AP_Int16 acro_roll_rate;
     AP_Int16 acro_pitch_rate;

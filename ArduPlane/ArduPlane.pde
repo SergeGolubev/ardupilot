@@ -170,6 +170,7 @@ static bool in_log_download;
 
 // scaled roll limit based on pitch
 static int32_t roll_limit_cd;
+static int32_t roll_limit_circle_cd;
 static int32_t pitch_limit_min_cd;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -874,6 +875,7 @@ static void ahrs_update()
 
     // calculate a scaled roll limit based on current pitch
     roll_limit_cd = g.roll_limit_cd * cosf(ahrs.pitch);
+	roll_limit_circle_cd = min( roll_limit_cd, g.roll_limit_circle_cd * cosf(ahrs.pitch) );
     pitch_limit_min_cd = aparm.pitch_limit_min_cd * fabsf(cosf(ahrs.roll));
 }
 
@@ -1369,7 +1371,7 @@ static void update_flight_mode(void)
         // or we just want to fly around in a gentle circle w/o GPS,
         // holding altitude at the altitude we set when we
         // switched into the mode
-        nav_roll_cd  = roll_limit_cd / 3;
+        nav_roll_cd  = roll_limit_circle_cd;
         calc_nav_pitch();
         calc_throttle();
         break;
