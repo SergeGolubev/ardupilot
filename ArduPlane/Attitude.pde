@@ -836,7 +836,7 @@ static void set_servos(void)
     RC_Channel_aux::set_servo_out(RC_Channel_aux::k_flap, manual_flap_percent);
 
 	// handle flaps to pitch mix
-	channel_pitch->radio_out += auto_flap_percent * 5 * g.kff_flaps_to_pitch;
+	channel_pitch->radio_out -= auto_flap_percent * 5 * g.kff_flaps_to_pitch;
 	channel_pitch->radio_out = constrain_int16( channel_pitch->radio_out,
 		channel_pitch->radio_min, channel_pitch->radio_max );
 	
