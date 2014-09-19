@@ -123,7 +123,8 @@ public:
         k_param_stab_pitch_down,
         k_param_terrain_lookahead,
         k_param_fbwa_tdrag_chan,
-
+		k_param_roll_limit_circle_cd, // roll angle in CIRCLE mode
+		
         // 100: Arming parameters
         k_param_arming = 100,
 
@@ -200,11 +201,6 @@ public:
         k_param_camera_mount,
         k_param_camera_mount2,
 
-		// макс. крен в режиме circle, в сотых градуса 
-		// пихнул сюда, потому что в секцию Navigation parameters уже не лезет
-		k_param_roll_limit_circle_cd,
-
-        //
         // Battery monitoring parameters
         //
         k_param_battery = 166,
@@ -255,6 +251,7 @@ public:
         k_param_kff_pitch_to_throttle, // unused
         k_param_kff_throttle_to_pitch,
         k_param_scaling_speed,
+		k_param_kff_flaps_to_pitch, // flaps to pitch mixer
 
         //
         // 210: flight modes
@@ -334,6 +331,7 @@ public:
     AP_Float ground_steer_alt;
     AP_Int16 ground_steer_dps;
     AP_Float stab_pitch_down;
+	AP_Float kff_flaps_to_pitch;
 
     // speed used for speed scaling
     AP_Float scaling_speed;
