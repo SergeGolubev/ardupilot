@@ -128,6 +128,8 @@ public:
         k_param_takeoff_flap_percent,
         k_param_flap_slewrate,
 
+		k_param_roll_limit_circle_cd, // roll angle in CIRCLE mode
+		
         // 100: Arming parameters
         k_param_arming = 100,
 
@@ -204,7 +206,6 @@ public:
         k_param_camera_mount,
         k_param_camera_mount2,
 
-        //
         // Battery monitoring parameters
         //
         k_param_battery = 166,
@@ -255,6 +256,7 @@ public:
         k_param_kff_pitch_to_throttle, // unused
         k_param_kff_throttle_to_pitch,
         k_param_scaling_speed,
+		k_param_kff_flaps_to_pitch, // flaps to pitch mixer
 
         //
         // 210: flight modes
@@ -334,6 +336,7 @@ public:
     AP_Float ground_steer_alt;
     AP_Int16 ground_steer_dps;
     AP_Float stab_pitch_down;
+	AP_Float kff_flaps_to_pitch;
 
     // speed used for speed scaling
     AP_Float scaling_speed;
@@ -406,6 +409,7 @@ public:
     // Navigational maneuvering limits
     //
     AP_Int16 roll_limit_cd;
+	AP_Int16 roll_limit_circle_cd;
     AP_Int16 alt_offset;
     AP_Int16 acro_roll_rate;
     AP_Int16 acro_pitch_rate;
