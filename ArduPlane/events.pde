@@ -27,6 +27,10 @@ static void failsafe_short_on_event(enum failsafe_state fstype)
         break;
 
     case AUTO:
+		// handle only GCS failsafe in AUTO mode
+		if( fstype != FAILSAFE_GCS ) {
+			break;
+		}
     case GUIDED:
     case LOITER:
         if(g.short_fs_action != 0) {
@@ -74,6 +78,10 @@ static void failsafe_long_on_event(enum failsafe_state fstype)
         break;
 
     case AUTO:
+		// handle only GCS failsafe in AUTO mode
+		if( fstype != FAILSAFE_GCS ) {
+			break;
+		}
     case GUIDED:
     case LOITER:
         if(g.long_fs_action == 2) {
