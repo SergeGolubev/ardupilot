@@ -421,7 +421,10 @@ static void calc_nav_yaw_coordinated(float speed_scaler)
 
     // add in rudder mixing from roll
     steering_control.rudder += channel_roll->servo_out * g.kff_rudder_mix;
-    steering_control.rudder += channel_rudder->control_in;
+	// use manual rudder input only in non-automatic flight
+	if( !auto_throttle_mode || control_mode == CRUISE || control_mode == FLY_BY_WIRE_B ) { 
+		steering_control.rudder += channel_rudder->control_in;
+	}
     steering_control.rudder = constrain_int16(steering_control.rudder, -4500, 4500);
 }
 
