@@ -81,3 +81,10 @@ status.txt
 tags
 test.ArduCopter/*
 Thumbs.db
+/ArduPlane/Visual Micro
+/ArduPlane/Debug
+/ArduPlane/*.vcproj
+/ArduPlane/*.user
+/ArduPlane/*.ncb
+/ArduPlane/*.sln
+/ArduPlane/*.suo

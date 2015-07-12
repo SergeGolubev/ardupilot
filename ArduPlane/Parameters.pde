@@ -84,6 +84,14 @@ const AP_Param::Info var_info[] PROGMEM = {
     // @User: Advanced
     GSCALAR(kff_throttle_to_pitch,  "KFF_THR2PTCH",   0),
 
+	// @Param: KFF_FLAPS2PTCH
+    // @DisplayName: Flaps to Pitch Mix
+    // @Description: Flaps to pitch feed-forward gain.
+    // @Range: 0 1
+    // @Increment: 0.01
+    // @User: Advanced
+    GSCALAR(kff_flaps_to_pitch,  "KFF_FLAPS2PTCH",   0),
+
     // @Param: STAB_PITCH_DOWN
     // @DisplayName: Low throttle pitch down trim 
     // @Description: This controls the amount of down pitch to add in FBWA and AUTOTUNE modes when at low throttle. No down trim is added when throttle is above TRIM_THROTTLE. Below TRIM_THROTTLE downtrim is added in proportion to the amount the throttle is below TRIM_THROTTLE. At zero throttle the full downpitch specified in this parameter is added. This parameter is meant to help keep airspeed up when flying in FBWA mode with low throttle, such as when on a landing approach, without relying on an airspeed sensor. A value of 2 degrees is good for many planes, although a higher value may be needed for high drag aircraft.
@@ -638,8 +646,17 @@ const AP_Param::Info var_info[] PROGMEM = {
     // @Increment: 1
     // @User: Standard
     GSCALAR(roll_limit_cd,          "LIM_ROLL_CD",    HEAD_MAX_CENTIDEGREE),
-
-    // @Param: LIM_PITCH_MAX
+	
+	// @Param: LIM_ROLL_CRCL_CD
+    // @DisplayName: Maximum Bank Angle CIRCLE MODE
+    // @Description: The bank angle in CIRCLE MODE, actual roll angle is min( LIM_ROLL_CD, LIM_ROLL_CRCL_CD )
+    // @Units: centi-Degrees
+    // @Range: 0 9000
+    // @Increment: 1
+    // @User: Standard
+    GSCALAR(roll_limit_circle_cd,          "LIM_ROLL_CRCL_CD",    2000),
+   
+	// @Param: LIM_PITCH_MAX
     // @DisplayName: Maximum Pitch Angle
     // @Description: The maximum commanded pitch up angle
     // @Units: centi-Degrees

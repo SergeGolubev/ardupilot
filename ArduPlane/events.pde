@@ -17,33 +17,31 @@ static void failsafe_short_on_event(enum failsafe_state fstype)
     case FLY_BY_WIRE_B:
     case CRUISE:
     case TRAINING:
+		// do not handle GCS failsafe in manual modes
+		if( fstype == FAILSAFE_GCS ) {
+			break;
+		}
+		// change to RTL or glide
         failsafe.saved_mode = control_mode;
         failsafe.saved_mode_set = 1;
         if(g.short_fs_action == 2) {
             set_mode(FLY_BY_WIRE_A);
         } else {
-            set_mode(CIRCLE);
+            set_mode(RTL);
         }
         break;
 
     case AUTO:
-    case GUIDED:
+	case GUIDED:
     case LOITER:
-        if(g.short_fs_action != 0) {
-            failsafe.saved_mode = control_mode;
-            failsafe.saved_mode_set = 1;
-            if(g.short_fs_action == 2) {
-                set_mode(FLY_BY_WIRE_A);
-            } else {
-                set_mode(CIRCLE);
-            }
-        }
-        break;
-
-    case CIRCLE:
+	case CIRCLE:
     case RTL:
-    default:
-        break;
+		// do nothing on short failsafe in automatic modes and CIRCLE
+		// all these modes are safe in case of short control loss
+		break;
+
+	default:
+		break;
     }
     gcs_send_text_fmt(PSTR("flight mode = %u"), (unsigned)control_mode);
 }
@@ -66,6 +64,10 @@ static void failsafe_long_on_event(enum failsafe_state fstype)
     case CRUISE:
     case TRAINING:
     case CIRCLE:
+		// do not handle GCS failsafe in manual modes
+		if( fstype == FAILSAFE_GCS ) {
+			break;
+		}
         if(g.long_fs_action == 2) {
             set_mode(FLY_BY_WIRE_A);
         } else {
@@ -74,8 +76,13 @@ static void failsafe_long_on_event(enum failsafe_state fstype)
         break;
 
     case AUTO:
-    case GUIDED:
+	case GUIDED:
     case LOITER:
+		// handle only GCS failsafe in automatic modes
+		if( fstype != FAILSAFE_GCS ) {
+			break;
+		}
+    
         if(g.long_fs_action == 2) {
             set_mode(FLY_BY_WIRE_A);
         } else if (g.long_fs_action == 1) {
@@ -101,7 +108,7 @@ static void failsafe_short_off_event()
 
     // re-read the switch so we can return to our preferred mode
     // --------------------------------------------------------
-    if (control_mode == CIRCLE && failsafe.saved_mode_set) {
+    if (control_mode == RTL && failsafe.saved_mode_set) {
         failsafe.saved_mode_set = 0;
         set_mode(failsafe.saved_mode);
     }

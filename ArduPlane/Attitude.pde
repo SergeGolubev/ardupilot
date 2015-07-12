@@ -421,7 +421,10 @@ static void calc_nav_yaw_coordinated(float speed_scaler)
 
     // add in rudder mixing from roll
     steering_control.rudder += channel_roll->servo_out * g.kff_rudder_mix;
-    steering_control.rudder += rudder_input;
+	// use manual rudder input in automatic modes only if stick mixing is enabled
+	if( stick_mixing_enabled() || !auto_throttle_mode || control_mode == CRUISE || control_mode == FLY_BY_WIRE_B ) { 
+		steering_control.rudder += rudder_input;
+	}
     steering_control.rudder = constrain_int16(steering_control.rudder, -4500, 4500);
 }
 
@@ -910,6 +913,11 @@ static void set_servos(void)
     RC_Channel_aux::set_servo_out(RC_Channel_aux::k_flap_auto, auto_flap_percent);
     RC_Channel_aux::set_servo_out(RC_Channel_aux::k_flap, manual_flap_percent);
 
+	// handle flaps to pitch mix
+	channel_pitch->radio_out -= auto_flap_percent * 5 * g.kff_flaps_to_pitch;
+	channel_pitch->radio_out = constrain_int16( channel_pitch->radio_out,
+		channel_pitch->radio_min, channel_pitch->radio_max );
+	
     if (control_mode >= FLY_BY_WIRE_B) {
         /* only do throttle slew limiting in modes where throttle
          *  control is automatic */
