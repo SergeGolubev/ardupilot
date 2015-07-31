@@ -17,18 +17,14 @@ static void failsafe_short_on_event(enum failsafe_state fstype)
     case FLY_BY_WIRE_B:
     case CRUISE:
     case TRAINING:
-		// do not handle GCS failsafe in manual modes
-		if( fstype == FAILSAFE_GCS ) {
-			break;
+		// only handle failsafe if enabled
+		// short failsafe is triggered only on throlle
+		if( g.failsafe_manual_mode & FS_MODE_THR ) {
+			// change to RTL
+			failsafe.saved_mode = control_mode;
+			failsafe.saved_mode_set = 1;
+			set_mode(RTL);
 		}
-		// change to RTL or glide
-        failsafe.saved_mode = control_mode;
-        failsafe.saved_mode_set = 1;
-        if(g.short_fs_action == 2) {
-            set_mode(FLY_BY_WIRE_A);
-        } else {
-            set_mode(RTL);
-        }
         break;
 
     case AUTO:
@@ -64,29 +60,22 @@ static void failsafe_long_on_event(enum failsafe_state fstype)
     case CRUISE:
     case TRAINING:
     case CIRCLE:
-		// do not handle GCS failsafe in manual modes
-		if( fstype == FAILSAFE_GCS ) {
-			break;
-		}
-        if(g.long_fs_action == 2) {
-            set_mode(FLY_BY_WIRE_A);
-        } else {
-            set_mode(RTL);
+		// handle failsafe if enabled
+		if( ( g.failsafe_manual_mode & FS_MODE_THR ) && fstype == FAILSAFE_LONG
+			|| ( g.failsafe_manual_mode & FS_MODE_GCS ) && fstype == FAILSAFE_GCS )
+		{
+			set_mode(RTL);
         }
         break;
 
     case AUTO:
 	case GUIDED:
     case LOITER:
-		// handle only GCS failsafe in automatic modes
-		if( fstype != FAILSAFE_GCS ) {
-			break;
-		}
-    
-        if(g.long_fs_action == 2) {
-            set_mode(FLY_BY_WIRE_A);
-        } else if (g.long_fs_action == 1) {
-            set_mode(RTL);
+		// handle failsafe if enabled
+		if( ( g.failsafe_auto_mode & FS_MODE_THR ) && fstype == FAILSAFE_LONG
+			|| ( g.failsafe_auto_mode & FS_MODE_GCS ) && fstype == FAILSAFE_GCS )
+		{
+			set_mode(RTL);
         }
         break;
 
