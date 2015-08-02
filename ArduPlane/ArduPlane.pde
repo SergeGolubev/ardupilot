@@ -1334,13 +1334,7 @@ static void update_flight_mode(void)
         if (fly_inverted()) {
             nav_pitch_cd = -nav_pitch_cd;
         }
-        if (failsafe.ch3_failsafe && g.short_fs_action == 2) {
-            // FBWA failsafe glide
-            nav_roll_cd = 0;
-            nav_pitch_cd = 0;
-            channel_throttle->servo_out = 0;
-        }
-        if (g.fbwa_tdrag_chan > 0) {
+		if (g.fbwa_tdrag_chan > 0) {
             // check for the user enabling FBWA taildrag takeoff mode
             bool tdrag_mode = (hal.rcin->read(g.fbwa_tdrag_chan-1) > 1700);
             if (tdrag_mode && !auto_state.fbwa_tdrag_takeoff_mode) {

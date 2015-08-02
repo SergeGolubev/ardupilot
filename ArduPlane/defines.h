@@ -35,6 +35,13 @@ enum gcs_failsafe {
                                  // drops to 0
 };
 
+// failsafe modes
+enum failsafe_mode {
+	FS_MODE_NONE = 0, // no failsafe
+	FS_MODE_THR = _BV( 0 ), // throttle failsafe
+	FS_MODE_GCS = _BV( 1 ), // GCS failsafe
+	FS_MODE_BOTH = _BV( 0 ) | _BV( 1 ) // both
+};
 
 // active altitude sensor
 // ----------------------

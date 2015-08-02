@@ -247,8 +247,8 @@ public:
         k_param_throttle_fs_value,
         k_param_throttle_cruise,
 
-        k_param_short_fs_action,
-        k_param_long_fs_action,
+        k_param_failsafe_auto_mode,
+        k_param_failsafe_manual_mode,
         k_param_gcs_heartbeat_fs_enabled,
         k_param_throttle_slewrate,
         k_param_throttle_suppress_manual,
@@ -401,8 +401,8 @@ public:
     AP_Int8 throttle_nudge;
 
     // Failsafe
-    AP_Int8 short_fs_action;
-    AP_Int8 long_fs_action;
+    AP_Int8 failsafe_auto_mode;
+    AP_Int8 failsafe_manual_mode;
     AP_Float short_fs_timeout;
     AP_Float long_fs_timeout;
     AP_Int8 gcs_heartbeat_fs_enabled;

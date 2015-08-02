@@ -528,12 +528,12 @@ const AP_Param::Info var_info[] PROGMEM = {
     // @User: Standard
     GSCALAR(throttle_nudge,         "THROTTLE_NUDGE",  1),
 
-    // @Param: FS_SHORT_ACTN
-    // @DisplayName: Short failsafe action
-    // @Description: The action to take on a short (FS_SHORT_TIMEOUT) failsafe event. A short failsafe even can be triggered either by loss of RC control (see THR_FS_VALUE) or by loss of GCS control (see FS_GCS_ENABL). A short failsafe event in stabilization and manual modes will cause an change to CIRCLE mode if FS_SHORT_ACTN is 0 or 1, and a change to FBWA mode if FS_SHORT_ACTN is 2. In all other modes (including AUTO and GUIDED mode) a short failsafe event will cause no mode change is FS_SHORT_ACTN is set to 0, will cause a change to CIRCLE mode if set to 1 and will change to FBWA mode if set to 2. Please see the documentation for FS_LONG_ACTN for the behaviour after FS_LONG_TIMEOUT seconds of failsafe.
-    // @Values: 0:Continue,1:Circle/ReturnToLaunch,2:Glide
+    // @Param: FS_AUTO_MODE
+    // @DisplayName: Failsafe auto mode
+    // @Description: Failsafe setting for automatic flight modes (AUTO, LOITER)
+    // @Values: 0: Disabled, 1: Throttle failsafe, 2: GCS failsafe, 3: Both
     // @User: Standard
-    GSCALAR(short_fs_action,        "FS_SHORT_ACTN",  SHORT_FAILSAFE_ACTION),
+    GSCALAR(failsafe_auto_mode,        "FS_AUTO_MODE",  2),
 
     // @Param: FS_SHORT_TIMEOUT
     // @DisplayName: Short failsafe timeout
@@ -544,12 +544,12 @@ const AP_Param::Info var_info[] PROGMEM = {
     // @User: Standard
     GSCALAR(short_fs_timeout,        "FS_SHORT_TIMEOUT", 1.5f),
 
-    // @Param: FS_LONG_ACTN
-    // @DisplayName: Long failsafe action
-    // @Description: The action to take on a long (FS_LONG_TIMEOUT seconds) failsafe event. If the aircraft was in a stabilization or manual mode when failsafe started and a long failsafe occurs then it will change to RTL mode if FS_LONG_ACTN is 0 or 1, and will change to FBWA if FS_LONG_ACTN is set to 2. If the aircraft was in an auto mode (such as AUTO or GUIDED) when the failsafe started then it will continue in the auto mode if FS_LONG_ACTN is set to 0, will change to RTL mode if FS_LONG_ACTN is set to 1 and will change to FBWA mode if FS_LONG_ACTN is set to 2. 
-    // @Values: 0:Continue,1:ReturnToLaunch,2:Glide
+    // @Param: FS_MANUAL_MODE
+    // @DisplayName: Failsafe manual mode
+    // @Description: Failsafe setting for manual flight modes (MANUAL, FBWA etc.)
+    // @Values: 0: Disabled, 1: Throttle failsafe, 2: GCS failsafe, 3: Both
     // @User: Standard
-    GSCALAR(long_fs_action,         "FS_LONG_ACTN",   LONG_FAILSAFE_ACTION),
+    GSCALAR(failsafe_manual_mode,         "FS_MANUAL_MODE",   1),
 
     // @Param: FS_LONG_TIMEOUT
     // @DisplayName: Long failsafe timeout
