@@ -637,6 +637,22 @@ static bool should_log(uint32_t mask)
     return ret;
 }
 
+// start new log
+static bool restart_log()
+{
+	if( in_mavlink_delay || in_log_download ) {
+		return false;
+	}
+	
+	// we have to set in_mavlink_delay to prevent logging while
+	// writing headers
+	in_mavlink_delay = true;
+	start_logging();
+	in_mavlink_delay = false;
+	
+	return true;
+}
+
 /*
   send FrSky telemetry. Should be called at 5Hz by scheduler
  */

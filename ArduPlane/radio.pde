@@ -106,7 +106,12 @@ static void rudder_arm_check()
             if (rudder_arm_timer == 0) rudder_arm_timer = now;
         } else {
             //time to arm!
-            if (arming.arm(AP_Arming::RUDDER)) {
+			//
+			// Restart data flash log on arming. If creating new log fails
+			// (due to 'in_mavlink_delay' or 'in_log_download' flags, don't know
+			// for sure if it is possible when arming), then arming also fails.
+			//
+            if( arming.arm( AP_Arming::RUDDER ) && restart_log() ) {
                 channel_throttle->enable_out();                        
                 //only log if arming was successful
                 Log_Arm_Disarm();

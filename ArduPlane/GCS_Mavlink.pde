@@ -1023,7 +1023,12 @@ void GCS_MAVLINK::handleMessage(mavlink_message_t* msg)
         case MAV_CMD_COMPONENT_ARM_DISARM:
             if (packet.param1 == 1.0f) {
                 // run pre_arm_checks and arm_checks and display failures
-                if (arming.arm(AP_Arming::MAVLINK)) {
+				//
+				// Restart data flash log on arming. If creating new log fails
+				// (due to 'in_mavlink_delay' or 'in_log_download' flags, don't know
+				// for sure if it is possible when arming), then arming also fails.
+				//
+				if( arming.arm( AP_Arming::MAVLINK ) && restart_log() ) {
                     //only log if arming was successful
                     channel_throttle->enable_out();                        
                     Log_Arm_Disarm();
